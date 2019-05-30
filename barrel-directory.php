@@ -24,9 +24,10 @@
 
 namespace BarrelDirectory;
 
-use BarrelDirectory\Includes\Api;
+use BarrelDirectory\Includes\Api\Api_Profile;
 use BarrelDirectory\Includes\Db;
 use BarrelDirectory\Includes\Cpt\Cpt;
+use BarrelDirectory\Includes\Carbon\Carbon;
 use BarrelDirectory\Includes\Shortcode\Shortcode;
 
 // Include the autoloader so we can dynamically include classes.
@@ -37,24 +38,18 @@ add_action( 'plugins_loaded', 'BarrelDirectory\barrel_directory_init' );
 
 // Starts the plugin by initializing classes, setting up hooks and more
 function barrel_directory_init() {
+	
+	// Autoload composer classes
+	require_once( 'vendor/autoload.php' );
+		\Carbon_Fields\Carbon_Fields::boot();
+	
+	// Instantiate things (TODO: reduce this list)
 	new Db\Db_Setup();
 	new Db\Db_Control('test');
-	new Api\Api_Profile();
+	new Api_Profile();
 	new Cpt();
 	new Shortcode();
-}
-
-// Define path and URL to the ACF plugin.
-define( 'DIRECTORY_ACF_PATH', __DIR__ . '/Includes/ACF/' );
-define( 'DIRECTORY_ACF_URL', __DIR__ . '/Includes/ACF/' );
-
-// Include the ACF plugin.
-require( DIRECTORY_ACF_PATH . 'acf.php' );
-
-// Customize the url setting to fix incorrect asset URLs.
-add_filter('acf/settings/url', 'BarrelDirectory\directory_acf_settings_url');
-function directory_acf_settings_url( $url ) {
-    return DIRECTORY_ACF_URL;
+	new Carbon();
 }
 
 // Include some css (can be overridden by the theme)

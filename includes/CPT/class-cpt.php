@@ -9,35 +9,35 @@ if ( ! defined( 'WPINC' ) ) {
 class Cpt {
 	public function __construct () {
 		add_action( 'init', array($this,'cpts'), 0 );
-		add_action('add_meta_boxes', array($this,'add_custom_box'));
+		// add_action('add_meta_boxes', array($this,'add_custom_box'));
 	}
 
-	// LOCATION CPT
+	// Studio CPT
 	public function cpts() {
 		$loc_labels = array(
-			'name'                => 'Locations',
-			'singular_name'       => 'Location',
-			'menu_name'           => 'Location Directory',
+			'name'                => 'Studios',
+			'singular_name'       => 'Studio',
+			'menu_name'           => 'Studio Directory',
 			'parent_item_colon'   => 'Parent Item:',
-			'all_items'           => 'All Locations',
+			'all_items'           => 'All Studios',
 			'view_item'           => 'View Item',
-			'add_new_item'        => 'Add New Location',
+			'add_new_item'        => 'Add New Studio',
 			'add_new'             => 'Add New',
-			'edit_item'           => 'Edit Location',
-			'update_item'         => 'Update Location',
-			'search_items'        => 'Search Locations',
+			'edit_item'           => 'Edit Studio',
+			'update_item'         => 'Update Studio',
+			'search_items'        => 'Search Studios',
 			'not_found'           => 'Not found',
 			'not_found_in_trash'  => 'Not found in Trash',
 		);
 		$loc_rewrite = array(
-			'slug'                => 'Location',
+			'slug'                => 'studio',
 			'with_front'          => false,
 			'pages'               => true,
 			'feeds'               => true,
 		);
 		$loc_args = array(
-			'label'               => 'Location',
-			'description'         => 'Locations for MVL',
+			'label'               => 'studio',
+			'description'         => 'Studios for MVL',
 			'labels'              => $loc_labels,
 			'supports'            => array( 'title' ),
 			'hierarchical'        => false,
@@ -56,7 +56,7 @@ class Cpt {
 					'capability_type'     => 'page',
 					'show_in_rest'       => true,
 		);
-		register_post_type( 'location', $loc_args );
+		register_post_type( 'studio', $loc_args );
 
 		$mem_labels = array(
 			'name'                => 'Members',
@@ -113,7 +113,7 @@ class Cpt {
 		);
 	}
 	
-	function map_post_meta( $object ) {
+	function member_shortcode_box_html( $object ) {
 		//get the id of the post object array
 		$post_id = $object['id'];
 

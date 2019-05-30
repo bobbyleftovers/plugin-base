@@ -25,7 +25,7 @@ class Api_Profile extends WP_REST_Controller {
 	public function __construct() {
 		
 		$this->namespace = 'bd-api/v1';
-		add_action('rest_api_init', $this, 'register_routes');
+		add_action('rest_api_init', array($this, 'register_routes'));
 		// add_action( 'rest_api_init', 'map_meta_fields' );
 	
 	}

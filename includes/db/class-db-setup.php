@@ -11,9 +11,9 @@ class Db_Setup {
 		$this->register_db_actions();
 	}
 	public function register_db_actions () {
-		register_activation_hook(__FILE__, 'on_activation');
-		register_deactivation_hook(__FILE__, 'on_deactivation');
-		register_uninstall_hook(__FILE__, 'on_uninstall');
+		register_activation_hook(__FILE__, array($this, 'on_activation'));
+		register_deactivation_hook(__FILE__, array($this, 'on_deactivation'));
+		register_uninstall_hook(__FILE__, array($this, 'on_uninstall'));
 	}
 	public function on_activation () {
 		// Set up tables

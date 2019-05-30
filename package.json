@@ -1,7 +1,7 @@
 {
-  "name": "material",
+  "name": "wp plugin base",
   "version": "1.0.0",
-  "description": "packages for new wp theme",
+  "description": "packages for new wp plugin",
   "main": "index.js",
   "scripts": {
     "watch": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --mode=development --display-error-details --config=webpack.config.js",
