@@ -8,7 +8,7 @@ if ( ! defined( 'WPINC' ) ) {
 
 use Carbon_Fields\Container;
 use Carbon_Fields\Field;
-class Members {
+class Members implements Fieldset_Interface {
 	function add_group() {
 
     $states = [

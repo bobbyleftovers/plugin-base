@@ -16,11 +16,11 @@ class Db_Setup {
 		register_uninstall_hook(__FILE__, array($this, 'on_uninstall'));
 	}
 	public function on_activation () {
+		die('activate!');
 		// Set up tables
 		global $wpdb;
 		$charset_collate = $wpdb->get_charset_collate();
-		$profile_name = $wpdb->prefix . 'barrel_directory_profiles';
-		$location_name = $wpdb->prefix . 'barrel_directory_locations';
+		$profile_name = $wpdb->prefix . 'barrel_directory_entries';
 
 		$sql = "CREATE TABLE $profile_name (
 			id mediumint(9) NOT NULL AUTO_INCREMENT,
@@ -60,7 +60,7 @@ class Db_Setup {
 	}
 
 	public function on_uninstall () {
-
+		die('deactivate!');
 		global $wpdb;
 		$profile_name = $wpdb->prefix . 'barrel_directory_profiles';
 		$location_name = $wpdb->prefix . 'barrel_directory_profiles';

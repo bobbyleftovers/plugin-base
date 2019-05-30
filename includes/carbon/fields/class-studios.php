@@ -8,7 +8,7 @@ if ( ! defined( 'WPINC' ) ) {
 
 use Carbon_Fields\Container;
 use Carbon_Fields\Field;
-class Studios {
+class Studios implements Fieldset_Interface {
 	function add_group() {
 
     Container::make( 'post_meta', 'Map Setup' )

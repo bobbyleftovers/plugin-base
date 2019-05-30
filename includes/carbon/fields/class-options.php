@@ -8,7 +8,7 @@ if ( ! defined( 'WPINC' ) ) {
 
 use Carbon_Fields\Container;
 use Carbon_Fields\Field;
-class Options {
+class Options implements Fieldset_Interface {
 	function add_group() {
 		Container::make( 'theme_options', 'Directory Options' )
 			->add_fields( array(
