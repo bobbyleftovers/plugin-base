@@ -27,8 +27,14 @@ namespace BarrelDirectory;
 use BarrelDirectory\Includes\Api\Api_Profile;
 use BarrelDirectory\Includes\Db;
 use BarrelDirectory\Includes\Cpt\Cpt;
+use BarrelDirectory\Includes\Carbon\Fields\Members;
 use BarrelDirectory\Includes\Carbon\Carbon;
 use BarrelDirectory\Includes\Shortcode\Shortcode;
+use Carbon_Fields\Container;
+use Carbon_Fields\Field;
+
+// Define a constant for URIs
+define( 'BARREL_DIRECTORY_PATH', __DIR__ );
 
 // Include the autoloader so we can dynamically include classes.
 require_once( 'autoload.php' );
@@ -38,11 +44,6 @@ add_action( 'plugins_loaded', 'BarrelDirectory\barrel_directory_init' );
 
 // Starts the plugin by initializing classes, setting up hooks and more
 function barrel_directory_init() {
-	
-	// Autoload composer classes
-	require_once( 'vendor/autoload.php' );
-		\Carbon_Fields\Carbon_Fields::boot();
-	
 	// Instantiate things (TODO: reduce this list)
 	new Db\Db_Setup();
 	new Db\Db_Control('test');
