@@ -1,2 +1,2 @@
-# US Maps WP Plugin
-### A map tool which uses an svg US map and presents data about each state. Uses a custom post type for map building, Carbon Fields for map data, Vue.js for presentation. Works in PHP 7.2
+# WP Plugin Boilerplate
+### Uses autoload for classes and namespaced classes/functions. Has stubs for Carbon Fields, REST-API, custom post types,  taxonomies, custom tables that integrate with Carbon Field declarations and more. Uses composer for some dependencies and Webpack for compiling assets. Works in PHP 7.2. 
