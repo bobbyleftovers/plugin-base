@@ -1,4 +1,16 @@
 <?php
+
+namespace BarrelDirectory;
+
+use BarrelDirectory\Includes\Api\Api_Profile;
+use BarrelDirectory\Includes\Db as DB;
+use BarrelDirectory\Includes\Cpt\Cpt;
+use BarrelDirectory\Includes\Carbon\Fields\Members;
+use BarrelDirectory\Includes\Carbon\Carbon;
+use BarrelDirectory\Includes\Shortcode\Shortcode;
+use Carbon_Fields\Container;
+use Carbon_Fields\Field;
+
 /*
  *
  * This file is read by WordPress to generate the plugin information in the
@@ -22,19 +34,15 @@
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 
-namespace BarrelDirectory;
-
-use BarrelDirectory\Includes\Api\Api_Profile;
-use BarrelDirectory\Includes\Db;
-use BarrelDirectory\Includes\Cpt\Cpt;
-use BarrelDirectory\Includes\Carbon\Fields\Members;
-use BarrelDirectory\Includes\Carbon\Carbon;
-use BarrelDirectory\Includes\Shortcode\Shortcode;
-use Carbon_Fields\Container;
-use Carbon_Fields\Field;
 
 // Define a constant for URIs
 define( 'BARREL_DIRECTORY_PATH', __DIR__ );
+define( 'ENTRY_TABLE_NAME', 'directory_entries' );
+
+// Activation/Deactivation/Delete hooks create or drop DB tables
+register_activation_hook(__FILE__, array('BarrelDirectory\Includes\Db\Db_Setup', 'on_activation'));
+register_deactivation_hook(__FILE__, array('BarrelDirectory\Includes\Db\Db_Setup', 'on_deactivation'));
+register_uninstall_hook(__FILE__, array('BarrelDirectory\Includes\Db\Db_Setup', 'on_uninstall'));
 
 // Include the autoloader so we can dynamically include classes.
 require_once( 'autoload.php' );
@@ -44,9 +52,7 @@ add_action( 'plugins_loaded', 'BarrelDirectory\barrel_directory_init' );
 
 // Starts the plugin by initializing classes, setting up hooks and more
 function barrel_directory_init() {
-	// Instantiate things (TODO: reduce this list)
-	new Db\Db_Setup();
-	new Db\Db_Control('test');
+	// Instantiate things (TODO: reduce this list by making a setup class)
 	new Api_Profile();
 	new Cpt();
 	new Shortcode();

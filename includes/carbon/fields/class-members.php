@@ -8,6 +8,10 @@ if ( ! defined( 'WPINC' ) ) {
 
 use Carbon_Fields\Container;
 use Carbon_Fields\Field;
+
+// Disable Admin-only access to user meta
+add_filter( 'carbon_fields_user_meta_container_admin_only_access', '__return_false' );
+
 class Members implements Fieldset_Interface {
 	function add_group() {
 
@@ -63,72 +67,43 @@ class Members implements Fieldset_Interface {
         'WV' => 'West Virginia',
         'WI' => 'Wisconsin',
         'WY' => 'Wyoming',
-    ];
+		];
+		
+		$social_types = [
+			'facebook' => 'Facebook',
+			'instagram' => 'Instagram',
+		];
 
-    Container::make( 'post_meta', 'Map Setup' )
-			->where('post_type', '=', 'member')
+    Container::make( 'user_meta', 'Teacher Info' )
+			// ->where('post_type', '=', 'member')
     
-			->add_tab('Map', array(
+			->add_fields(array(
 				// setup fields
-				Field::make( 'checkbox', 'show_dc', 'Show DC' )
-					->set_option_value( 'false' ),
-				Field::make( 'checkbox', 'show_small_state_icons', 'Show Icons for small states and districts' )
-					->set_option_value( 'false' ),
-			));
-
-			/*->add_tab('Viewer Window', array(
-				Field::make( 'text', 'data_empty_heading', 'Window Heading (When no state is selected)' )
-					->set_default_value( 'CLICK A STATE TO VIEW DATA' ),
-				Field::make( 'color', 'data_heading_color', 'Heading Color' )
-					->set_default_value( '#444444' ),
-					
-				// spreadsheet? (show csv uploader)
-				Field::make( 'checkbox', 'has_csv', 'Use CSV Data?' )
-					->set_option_value( 'false' ),
-				Field::make( 'file', 'map_csv', 'CSV File')
-					// ->set_type( 'csv' )
-					->set_value_type( 'url' )
-					->set_conditional_logic( array(
-						array(
-							'field' => 'has_csv',
-							'value' => true,
-					)),
-
-				// download? (show state selector/state data uploader)
-				Field::make( 'checkbox', 'has_downloads', 'Use Per-state Downloads' )
-					->set_option_value( 'false' )
-					->set_conditional_logic( array(
-						array(
-							'field' => 'has_csv',
-							'value' => false,
-						)
-				)),
-				Field::make( 'complex', 'states_array', 'States To Add' )
+				// Field::make( 'text', 'f_name', 'First Name' ),
+				// Field::make( 'text', 'l_name', 'Last Name' ),
+				Field::make( 'text', 'job_title', 'Job Title' ),
+				Field::make( 'checkbox', 'lyt_certified', 'LYT Certified?' ),
+				// Field::make( 'textarea', 'about', 'About' ),
+				Field::make( 'text', 'address_street', 'Street' ),
+				Field::make( 'text', 'address_supplemental', 'Additional Address Info' ),
+				Field::make( 'text', 'address_city', 'City' ),
+				Field::make( 'select', 'address_state', 'State' )
+					->add_options( $states ),
+				Field::make( 'text', 'address_zip', 'Postal Code' ),
+				// Field::make( 'text', 'email', 'Email' ),
+				Field::make( 'text', 'phone', 'Phone' ),
+				// Field::make( 'text', 'website', 'Website' ),
+				Field::make( 'complex', 'social', 'Social Media' )
 					->add_fields( array(
-						Field::make( 'select', 'state', 'Select a State' )
-							->add_options( $states ),
-						Field::make( 'complex', 'state_meta', 'Custom State Data' )
-							->add_fields( array(
-								Field::make( 'checkbox', 'is_download', 'Add File? (default is a link)' )
-									->set_option_value( 'false' ),
-								Field::make( 'text', 'array_item_label', 'Item Header'),
-								Field::make( 'file', 'state_download', 'Downloadable File')
-									->set_value_type( 'url' )
-									->set_conditional_logic( array(
-										array(
-											'field' => 'is_download',
-											'value' => true,
-										)
-									)),
-								Field::make( 'text', 'array_item_data', 'Item Copy')
-							))
+						Field::make( 'select', 'media_type', 'Type' )
+							->add_options( $social_types ),
+						Field::make( 'text', 'profile_url', 'Profile URL' )
+					)),
+				Field::make( 'complex', 'images', 'Images' )
+					->add_fields( array(
+						Field::make( 'file', 'image', 'Image' )
+						->set_value_type( 'url' )
 					))
-					->set_conditional_logic( array(
-						array(
-							'field' => 'has_downloads',
-							'value' => true,
-						)
-					))
-			)));*/
+			));
 	}
 }

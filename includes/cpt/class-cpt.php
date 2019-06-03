@@ -8,16 +8,17 @@ if ( ! defined( 'WPINC' ) ) {
 
 class Cpt {
 	public function __construct () {
-		add_action( 'init', array($this,'cpts'), 0 );
+		add_action( 'init', array($this, 'cpts'), 0 );
+		add_action( 'init', array($this, 'taxonomies'), 0 );
 		// add_action('add_meta_boxes', array($this,'add_custom_box'));
 	}
 
-	// Studio CPT
+	// Add CPTs
 	public function cpts() {
 		$loc_labels = array(
 			'name'                => 'Studios',
 			'singular_name'       => 'Studio',
-			'menu_name'           => 'Studio Directory',
+			'menu_name'           => 'LYT Studio Directory',
 			'parent_item_colon'   => 'Parent Item:',
 			'all_items'           => 'All Studios',
 			'view_item'           => 'View Item',
@@ -37,7 +38,7 @@ class Cpt {
 		);
 		$loc_args = array(
 			'label'               => 'studio',
-			'description'         => 'Studios for MVL',
+			'description'         => 'LYT-Certified Studios',
 			'labels'              => $loc_labels,
 			'supports'            => array( 'title' ),
 			'hierarchical'        => false,
@@ -103,6 +104,91 @@ class Cpt {
 		register_post_type( 'member', $mem_args );
 	}
 
+	// Add taxonomies
+	public function taxonomies() {
+		// Languages
+		$lang_labels = array(
+			'name'                       => _x( 'Languages', 'Taxonomy General Name', 'text_domain' ),
+			'singular_name'              => _x( 'Language', 'Taxonomy Singular Name', 'text_domain' ),
+			'menu_name'                  => __( 'Languages', 'text_domain' ),
+			'all_items'                  => __( 'All Items', 'text_domain' ),
+			'new_item_name'              => __( 'New Item Name', 'text_domain' ),
+			'add_new_item'               => __( 'Add New Item', 'text_domain' ),
+			'edit_item'                  => __( 'Edit Item', 'text_domain' ),
+			'update_item'                => __( 'Update Item', 'text_domain' ),
+			'separate_items_with_commas' => __( 'Separate items with commas', 'text_domain' ),
+			'search_items'               => __( 'Search Items', 'text_domain' ),
+			'add_or_remove_items'        => __( 'Add or remove items', 'text_domain' ),
+			'choose_from_most_used'      => __( 'Choose from the most used items', 'text_domain' ),
+			'not_found'                  => __( 'Not Found', 'text_domain' ),
+		);
+		$lang_args = array(
+			'labels'                     => $lang_labels,
+			'hierarchical'               => false,
+			'public'                     => true,
+			'show_ui'                    => true,
+			'show_admin_column'          => true,
+			'show_in_nav_menus'          => false,
+			'show_tagcloud'              => true,
+		);
+		register_taxonomy( 'language', [ 'studio', 'member' ], $lang_args );
+
+		// Certifications
+		$cert_labels = array(
+			'name'                       => _x( 'Certifications', 'Taxonomy General Name', 'text_domain' ),
+			'singular_name'              => _x( 'Certification', 'Taxonomy Singular Name', 'text_domain' ),
+			'menu_name'                  => __( 'Certifications', 'text_domain' ),
+			'all_items'                  => __( 'All Items', 'text_domain' ),
+			'new_item_name'              => __( 'New Item Name', 'text_domain' ),
+			'add_new_item'               => __( 'Add New Item', 'text_domain' ),
+			'edit_item'                  => __( 'Edit Item', 'text_domain' ),
+			'update_item'                => __( 'Update Item', 'text_domain' ),
+			'separate_items_with_commas' => __( 'Separate items with commas', 'text_domain' ),
+			'search_items'               => __( 'Search Items', 'text_domain' ),
+			'add_or_remove_items'        => __( 'Add or remove items', 'text_domain' ),
+			'choose_from_most_used'      => __( 'Choose from the most used items', 'text_domain' ),
+			'not_found'                  => __( 'Not Found', 'text_domain' ),
+		);
+		$cert_args = array(
+			'labels'                     => $cert_labels,
+			'hierarchical'               => false,
+			'public'                     => true,
+			'show_ui'                    => true,
+			'show_admin_column'          => true,
+			'show_in_nav_menus'          => false,
+			'show_tagcloud'              => true,
+		);
+		register_taxonomy( 'certification', [ 'studio', 'member' ], $cert_args );
+
+		// Job Titles?
+		$cert_labels = array(
+			'name'                       => _x( 'Job Titles', 'Taxonomy General Name', 'text_domain' ),
+			'singular_name'              => _x( 'Job Title', 'Taxonomy Singular Name', 'text_domain' ),
+			'menu_name'                  => __( 'Jobs', 'text_domain' ),
+			'all_items'                  => __( 'All Items', 'text_domain' ),
+			'new_item_name'              => __( 'New Item Name', 'text_domain' ),
+			'add_new_item'               => __( 'Add New Item', 'text_domain' ),
+			'edit_item'                  => __( 'Edit Item', 'text_domain' ),
+			'update_item'                => __( 'Update Item', 'text_domain' ),
+			'separate_items_with_commas' => __( 'Separate items with commas', 'text_domain' ),
+			'search_items'               => __( 'Search Items', 'text_domain' ),
+			'add_or_remove_items'        => __( 'Add or remove items', 'text_domain' ),
+			'choose_from_most_used'      => __( 'Choose from the most used items', 'text_domain' ),
+			'not_found'                  => __( 'Not Found', 'text_domain' ),
+		);
+		$cert_args = array(
+			'labels'                     => $cert_labels,
+			'hierarchical'               => false,
+			'public'                     => true,
+			'show_ui'                    => true,
+			'show_admin_column'          => true,
+			'show_in_nav_menus'          => false,
+			'show_tagcloud'              => true,
+		);
+		register_taxonomy( 'job_title', [ 'studio', 'member' ], $cert_args );
+
+	}
+
 	// Add meta boxes
 	function add_custom_box() {
 		add_meta_box(
@@ -115,27 +201,17 @@ class Cpt {
 	
 	function member_shortcode_box_html( $object ) {
 		//get the id of the post object array
-		$post_id = $object['id'];
+		// $post_id = $object['id'];
 
-		$meta = [];
+		// $meta = [];
 		// $style = [];
 		
 		// Color, etc
-		// $style['map']['inactive'] = carbon_get_post_meta($post_id, 'state_inactive_color');
-		// $style['map']['initial'] = carbon_get_post_meta($post_id, 'state_fill_color');
-		// $style['map']['hover'] = carbon_get_post_meta($post_id, 'state_hover_color');
 		// $style['map']['clicked'] = carbon_get_post_meta($post_id, 'state_selected_color');
 		// $style['map']['borders'] = carbon_get_post_meta($post_id, 'state_border_color');
-		// $style['dataViewer']['placeholderHeading'] = carbon_get_post_meta($post_id, 'data_empty_heading');
-		// $style['dataViewer']['data_label_color'] = carbon_get_post_meta($post_id, 'data_label_color');
-		// $style['dataViewer']['data_border_color'] = carbon_get_post_meta($post_id, 'data_border_color');
 		// $meta['style'] = $style;
 
 		// data
-		// $meta['states_array'] = carbon_get_post_meta( $post_id, 'states_array' );
-		// $meta['show_dc'] = carbon_get_post_meta($post_id, 'show_dc');
-		// $meta['show_small_state_icons'] = carbon_get_post_meta($post_id, 'show_small_state_icons');
-		// $meta['has_csv'] = carbon_get_post_meta($post_id, 'has_csv');
 		// $meta['map_csv'] = carbon_get_post_meta($post_id, 'map_csv');
 		// $meta['has_downloads'] = carbon_get_post_meta($post_id, 'has_downloads');
 		// $meta['show_inactive'] = carbon_get_post_meta($post_id, 'show_inactive');
